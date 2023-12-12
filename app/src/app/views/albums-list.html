@@ -1,5 +1,8 @@
 <h1>{{titulo}}</h1>
 
+<div class="loading" *ngIf="loading">
+    <img src="../../assets/images/loader.gif">
+</div>
 <ul id="albums-list">
     <li *ngFor="let album of albums" class="album-item">
         <div class="data">
@@ -7,10 +10,14 @@
             <p>{{album.description}}</p>
         </div>
         <p>
-            <a href="#" class="btn btn-ver">Ver</a>
-            <a href="#" class="btn btn-default">Agregar</a>
-            <a href="#" class="btn btn-editar">Editar</a>
-            <a href="#" class="btn btn-eliminar">Eliminar</a>
+            <a [routerLink]="['/album', album._id]" class="btn btn-ver">Ver Album</a>
+            <a [routerLink]="['/crear-imagen', album._id]" class="btn btn-default">Agregar Fotos</a>
+            <a [routerLink]="['/editar-album', album._id]" class="btn btn-editar">Editar</a>
+            <a (click)="onDeleteConfirm(album._id)" class="btn btn-eliminar">Eliminar</a>
         </p>
+        <div class="seguro" *ngIf="confirmado === album._id">
+            <a (click)="onDeleteAlbum(album._id)" class="btn btn-eliminar"> Eliminar</a>
+            <a (click)="onCancelAlbum()" class="btn btn-ver"> Cancelar</a>
+        </div>
     </li>
 </ul>

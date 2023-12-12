@@ -5,16 +5,28 @@ import { AppRoutingModule } from './app.routing.module';
 import { AppComponent } from './app.component';
 import { AlbumsListComponent } from './components/albums-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AlbumAddComponent } from './components/album-add.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlbumDetailComponent } from './components/album-detail.component';
+import { AlbumEditComponent } from './components/album-edit.component';
+import { ImageAddComponent } from './components/image-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AlbumsListComponent
+    AlbumsListComponent,
+    AlbumAddComponent,
+    AlbumDetailComponent,
+    AlbumEditComponent,
+    ImageAddComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration()

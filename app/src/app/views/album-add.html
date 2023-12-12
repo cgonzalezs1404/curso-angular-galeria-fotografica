@@ -1,0 +1,16 @@
+<h1>{{titulo}}</h1>
+
+<form [formGroup]="form" (ngSubmit)="btnAction()">
+    <label>Titulo:</label>
+    <p>
+        <input type="text" formControlName="title">
+        <span *ngIf="submitted && form.controls.title.errors?.required">Campo requerido</span>
+    </p>
+    <label>Descripcion:</label>
+    <p>
+        <input type="text" formControlName="description">
+        <span *ngIf="submitted && form.controls.description.errors?.required">Campo requerido</span>
+    </p>
+    <button type="submit" value="Crear album" >Crear</button>
+    
+</form>

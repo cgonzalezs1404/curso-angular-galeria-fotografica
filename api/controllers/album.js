@@ -4,8 +4,8 @@ var Album = require('../models/album');
 
 async function getAlbum(req, res) {
     console.log('getAlbum');
-    var albumId = req.params.id;
-    await Album.findById(albumId)
+    console.log(req.params.id);
+    await Album.findById(req.params.id)
         .then((result) => {
             res.status(200).send(result);
         })
@@ -26,7 +26,7 @@ async function getAlbums(req, res) {
 }
 
 async function saveAlbum(req, res) {
-    console.log('saveAlbum');
+    console.log('saveAlbum', req.body);
     var album = new Album();
     var params = req.body;
     album.title = params.title;

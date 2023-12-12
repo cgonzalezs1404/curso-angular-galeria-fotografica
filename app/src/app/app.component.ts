@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'App Albums';
-  description = 'Carga de albumbes fotograficos';
+  description = 'Carga de albumes fotograficos';
 }

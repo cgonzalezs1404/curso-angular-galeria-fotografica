@@ -10,24 +10,41 @@ import { Album } from '../models/album';
 
 export class AlbumsListComponent implements OnInit {
 
-    public titulo: string = 'popo papa';
-    public albums: Album[] = [];
+    public titulo: string = '';
+    public albums: any[] = [];
+    public loading: boolean = false;
+    public confirmado = '';
 
     constructor(private albumService: AlbumService) {
 
     }
 
     async ngOnInit(): Promise<void> {
-        console.log('saludoss');
         this.titulo = 'Listado de albums:';
         await this.getAlbums();
     }
 
     async getAlbums() {
-        var result = await this.albumService.get().then((resp) => resp).catch((err) => err);
-        if(result.status === 200){
+        this.loading = true;
+        var result = await this.albumService.getAll().then((resp) => resp).catch((err) => err);
+        if (result.status === 200) {
             this.albums = result.body;
+            this.loading = false;
         }
-        console.log(this.albums);
+    }
+
+    onDeleteConfirm(id: string) {
+        this.confirmado = id;
+    }
+
+    async onDeleteAlbum(id: string) {
+        var result = await this.albumService.delete(id).then((res) => res).catch((err) => err);
+        if(result.status === 200){
+            await this.getAlbums();
+        }
+    }
+
+    onCancelAlbum() {
+        this.confirmado = '';
     }
 }
