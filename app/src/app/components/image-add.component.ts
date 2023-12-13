@@ -53,7 +53,7 @@ export class ImageAddComponent implements OnInit {
             console.log(payload);
             let result = await this.imageService.post(payload).then((res) => res).catch((err) => err);
             if (result.status === 200) {
-                this.router.navigate(['/album', this.albumId]);
+                this.router.navigate(['/editar-imagen', result.body._id]);
             }
         }
 

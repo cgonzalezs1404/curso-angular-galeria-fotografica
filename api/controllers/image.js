@@ -1,5 +1,6 @@
 'use strict'
 
+var mongoose = require('mongoose');
 var path = require('path');
 var Image = require('../models/image');
 var Album = require('../models/album');
@@ -23,11 +24,10 @@ async function getImage(req, res) {
 }
 
 async function getImages(req, res) {
-    var albumId = req.params.album;
-    if (!albumId) {
+    if (!req.params.album) {
         await Image.find({}).sort('-title').exec()
-            .then((image) => {
-                Album.populate(image, { path: 'album' })
+            .then((result) => {
+                Album.populate(result, { path: 'album' })
                     .then((album) => {
                         res.status(200).send(album);
                     })
@@ -39,9 +39,9 @@ async function getImages(req, res) {
                 res.status(500).send(error);
             });
     } else {
-        await Image.find({ album: albumId }).sort('-title').exec()
+        await Image.find({ album: req.params.album }).sort('-title').exec()
             .then((result) => {
-                Album.populate(image, { path: 'album' })
+                Album.populate(result, { path: 'album' })
                     .then((album) => {
                         res.status(200).send(album);
                     })

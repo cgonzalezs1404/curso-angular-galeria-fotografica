@@ -44,4 +44,9 @@ export class ImageService {
         let uri = `${this.url}image/${id}`;
         return await lastValueFrom(this._http.delete(uri, { observe: 'response', headers: { 'Content-Type': 'application/json' } }).pipe(map((response: any) => { return response })));
     }
+
+        public image(id: string) {
+        var url = `${this.url}get-image/${id}`;
+        return url;
+    }
 }

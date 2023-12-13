@@ -5,5 +5,22 @@
     <div class="data-rest">
         <h1>Album: {{album.title}}</h1>
         <p class="description">{{album.description}}</p>
+
+        <a [routerLink]="['/crear-imagen', album._id]" class="btn btn-default">Agregar Foto</a>
+
+        <div id="gallery-images" *ngIf="images">
+            <ul id="pictures-list">
+                <li *ngFor="let image of images" class="image-item">
+                <div class="picture">
+                    <img src="{{imageService.image(image.picture)}}" *ngIf="image.picture && image.picture !== ''">
+                </div>
+                <div class="title">
+                    <a [routerLink]="['/image', image._id]">{{image.title}}</a>
+                </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="clearfix"></div>
     </div>
 </div>

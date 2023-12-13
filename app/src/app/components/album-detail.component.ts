@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlbumService } from '../services/album.service';
-import { Album } from '../models/album';
+import { ImageService } from '../services/image.service';
 
 @Component({
     selector: 'album-detail',
@@ -11,10 +11,11 @@ import { Album } from '../models/album';
 export class AlbumDetailComponent implements OnInit {
 
     public titulo: string = '';
-    public album: Album|any;
     public loading: boolean = false;
+    public album: any;
+    public images: any[] = [];
 
-    constructor(private albumService: AlbumService, private router: Router, private route: ActivatedRoute) {
+    constructor(private albumService: AlbumService, public imageService: ImageService, private router: Router, private route: ActivatedRoute) {
 
     }
 
@@ -28,13 +29,22 @@ export class AlbumDetailComponent implements OnInit {
         this.route.params.forEach(async (params: Params) => {
             let id = params['id'];
             var result = await this.albumService.get(id).then((resp) => resp).catch((err) => err);
-            if (result.status === 200) {
-                this.album = result.body;
-                if(!this.album){
-                    this.router.navigate(['/']);
-                }
-                this.loading = false;
+            if (result.status !== 200) {
+                return;
             }
+
+            this.album = result.body;
+            if (!this.album) {
+                this.router.navigate(['/']);
+            }
+
+            var result = await this.imageService.getAll(this.album._id);
+            if (result.status !== 200) {
+                return;
+            }
+            this.images = result.body;
+            console.log(this.images);
+            this.loading = false;
         });
 
     }
